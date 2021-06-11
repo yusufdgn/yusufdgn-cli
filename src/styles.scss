@@ -1,1 +1,91 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+body {
+  font-family: Ubuntu;
+  background-color: #242424;
+}
+
+.terminal {
+  height: calc(100% - 25px);
+  margin-top: 1rem;
+
+  .text {
+    color: #ddd;
+    .template{
+      display: block;
+      margin-top:0.5rem;
+    }
+
+    .prompt {
+      display: flex;
+
+      .user {
+        color: #87d441;
+      }
+
+      .location {
+        color: #6d85a9;
+      }
+
+      .dollar {
+        color: #ddd;
+      }
+
+      .command {
+        display: flex;
+        input.line {
+          font-size:10pt;
+          background-color: transparent;
+          border: 0px solid;
+          color: #FFFFFF;
+          caret-shape: block;
+          caret-color: rgb(0, 400, 0);
+          outline: none;
+        }
+      }
+    }
+
+  }
+
+  .prompt {
+    margin-top: 10px;
+    display: flex;
+
+    .user {
+      color: #87d441;
+    }
+
+    .location {
+      color: #6d85a9;
+    }
+
+    .dollar {
+      color: #ddd;
+    }
+
+    .command {
+      display: flex;
+      input.line {
+        font-size:10pt;
+        background-color: transparent;
+        border: 0px solid;
+        color: #FFFFFF;
+        caret-shape: block;
+        caret-color: rgb(0, 200, 0);
+        outline: none;
+      }
+    }
+  }
+
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

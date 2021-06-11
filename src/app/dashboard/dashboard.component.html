@@ -1,0 +1,61 @@
+<div class="terminal">
+  <div class="text">
+    {{content}}
+    <ng-container *ngFor="let container of containers">
+      <ng-container *ngIf="container !== 'clear'" [ngTemplateOutlet]="readOnlyCommandLine"
+                    [ngTemplateOutletContext]="{context:container}"></ng-container>
+      <ng-container *ngIf="container === 'help'" [ngTemplateOutlet]="help"></ng-container>
+      <ng-container *ngIf="container === 'about'" [ngTemplateOutlet]="about"></ng-container>
+      <ng-container *ngIf="container === 'social'" [ngTemplateOutlet]="social"></ng-container>
+      <ng-container *ngIf="['help', 'about', 'social', 'clear'].indexOf(container) === -1" [ngTemplateOutlet]="other"
+                    [ngTemplateOutletContext]="{context:container}"></ng-container>
+    </ng-container>
+  </div>
+  <ng-container *ngTemplateOutlet="commandLine"></ng-container>
+</div>
+
+<ng-template #help>
+  <div class="template help">
+    Usages:
+    about
+    social
+    clear
+  </div>
+</ng-template>
+
+<ng-template #about>
+  <div class="template about">
+    Hi, this is about text.
+  </div>
+</ng-template>
+
+<ng-template #social>
+  <div class="template social">
+    Hi, this is social text.
+  </div>
+</ng-template>
+
+<ng-template #other let-context="context">
+  <div class="template other">
+    Girilen komut tanınmadı.({{context}})
+    For list of usages type "help"
+  </div>
+</ng-template>
+
+<ng-template #commandLine>
+  <div class="prompt">
+    <span class="user">{{username}}</span><span class="location">~</span><span class="dollar">$</span>
+    <div class="command">
+      <input type="text" class="line" (keyup.enter)="process($event)">
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #readOnlyCommandLine let-context="context">
+  <div class="prompt">
+    <span class="user">{{username}}</span><span class="location">~</span><span class="dollar">$</span>
+    <div class="command">
+      <input type="text" class="line" value="{{context}}" readonly>
+    </div>
+  </div>
+</ng-template>
