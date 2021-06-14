@@ -52,7 +52,7 @@ body {
   .prompt {
     margin-top: 10px;
     display: flex;
-
+    flex-wrap: wrap;
     .user {
       color: #87d441;
     }
@@ -66,14 +66,18 @@ body {
     }
 
     .command {
-      display: flex;
+      flex: 1 0 0;
+      input {
+        width: 100%;
+      }
       input.line {
         font-size:10pt;
         background-color: transparent;
         border: 0px solid;
         color: #FFFFFF;
-        caret-shape: block;
+        caret-shape: bar;
         caret-color: rgb(0, 200, 0);
+        margin-bottom: .5em;
         outline: none;
       }
     }

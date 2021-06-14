@@ -1,7 +1,6 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef, EmbeddedViewRef, OnInit,
+  OnInit,
   Renderer2,
   TemplateRef,
   ViewChild, ViewContainerRef
@@ -59,8 +58,5 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // tslint:disable-next-line:typedef
-  add() {
-  }
 
 }
