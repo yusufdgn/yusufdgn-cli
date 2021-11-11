@@ -18,6 +18,22 @@ body {
       margin-top:0.5rem;
     }
 
+    .social{
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: space-around;
+      a {
+        color: #ddd;
+        font-size: 11pt;
+        text-decoration: none;
+        padding-top: 0.2rem;
+        &:hover{
+          color: #606060;
+        }
+      }
+    }
+
+
     .prompt {
       display: flex;
 

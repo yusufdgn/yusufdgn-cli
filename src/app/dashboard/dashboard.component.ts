@@ -14,7 +14,7 @@ import {
 export class DashboardComponent implements OnInit {
   username = 'yusuf@dogan';
   command = '';
-  content = 'Welcome to Ubuntu!';
+  content = 'Komutları görebilmek için "help" yazın.!';
   @ViewChild('readOnlyCommandLine') readOnlyCommandLine!: TemplateRef<any>;
 
   containers: any = [];

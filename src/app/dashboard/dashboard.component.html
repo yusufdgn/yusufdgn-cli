@@ -7,7 +7,7 @@
       <ng-container *ngIf="container === 'help'" [ngTemplateOutlet]="help"></ng-container>
       <ng-container *ngIf="container === 'about'" [ngTemplateOutlet]="about"></ng-container>
       <ng-container *ngIf="container === 'social'" [ngTemplateOutlet]="social"></ng-container>
-      <ng-container *ngIf="['help', 'about', 'social', 'clear'].indexOf(container) === -1" [ngTemplateOutlet]="other"
+      <ng-container *ngIf="['help', 'about', 'social', 'clear'].indexOf(container) === -1" [ngTemplateOutlet]="notfound"
                     [ngTemplateOutletContext]="{context:container}"></ng-container>
     </ng-container>
   </div>
@@ -17,25 +17,27 @@
 <ng-template #help>
   <div class="template help">
     Usages:
-    about
-    social
-    clear
+    <p>about</p>
+    <p>social</p>
+    <p>clear</p>
   </div>
 </ng-template>
 
 <ng-template #about>
   <div class="template about">
-    Hi, this is about text.
+    Yusuf Doğan - Software Engineer
   </div>
 </ng-template>
 
 <ng-template #social>
   <div class="template social">
-    Hi, this is social text.
+    <a href="https://tr.linkedin.com/in/yusufdgn" class="social-link" target="_blank">LinkedIn</a>
+    <a href="https://instagram.com/yusufdgn" class="social-link" target="_blank">Instagram</a>
+    <a href="https://twitter.com/01011001D" class="social-link" target="_blank">Social</a>
   </div>
 </ng-template>
 
-<ng-template #other let-context="context">
+<ng-template #notfound let-context="context">
   <div class="template other">
     Undefined command : ({{context}})<br>
     For list of usages type "help"
