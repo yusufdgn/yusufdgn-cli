@@ -33,24 +33,18 @@ export class DashboardComponent implements OnInit {
     if (event.target.value === 'clear') {
       this.containers = [];
     }
-    this.goApiAnswer = '';
-    this.goApiUnRelevantAnswer = '';
     const targetValue = event.target.value;
     if (['help', 'about', 'social', 'clear'].indexOf(targetValue) === -1) {
       this.http.post<any>('https://yusufdgn.com:/api/question', {question: targetValue}).pipe().subscribe(res => {
-        this.goApiAnswer = res.Answer;
-        this.goApiUnRelevantAnswer = res.UnrelevantAnswer;
-        this.containers.push(targetValue);
+        this.containers.push({command: targetValue, context: targetValue, answer: res.Answer, unRelevantAnswer: res.UnrelevantAnswer});
         event.target.value = '';
       }, error => {
-        this.goApiAnswer = '';
-        this.goApiUnRelevantAnswer = '';
-        this.containers.push(targetValue);
+        this.containers.push({command: targetValue, context: targetValue, answer: JSON.parse(JSON.stringify(Math.random())), unRelevantAnswer: ''});
         // this.containers.push(targetValue);
         event.target.value = '';
       });
     } else {
-      this.containers.push(targetValue);
+      this.containers.push({command: targetValue, context: targetValue, answer: '', unRelevantAnswer: ''});
       event.target.value = '';
     }
 
@@ -79,6 +73,14 @@ export class DashboardComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+  }
+
+  clickTrigger() {
+    const element = document.getElementById('cLine');
+    if (element !== null) {
+      element.click();
+      element.focus();
+    }
   }
 
 

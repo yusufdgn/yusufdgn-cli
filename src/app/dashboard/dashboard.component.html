@@ -1,15 +1,15 @@
-<div class="terminal">
+<div class="terminal" (click)="clickTrigger()">
   <div class="text">
     {{content}}
     <ng-container *ngFor="let container of containers">
-      <ng-container *ngIf="container !== 'clear'" [ngTemplateOutlet]="readOnlyCommandLine"
-                    [ngTemplateOutletContext]="{context:container}"></ng-container>
-      <ng-container *ngIf="container === 'help'" [ngTemplateOutlet]="help"></ng-container>
-      <ng-container *ngIf="container === 'about'" [ngTemplateOutlet]="about"></ng-container>
-      <ng-container *ngIf="container === 'social'" [ngTemplateOutlet]="social"></ng-container>
-      <ng-container *ngIf="['help', 'about', 'social', 'clear'].indexOf(container) === -1"
+      <ng-container *ngIf="container.command !== 'clear'" [ngTemplateOutlet]="readOnlyCommandLine"
+                    [ngTemplateOutletContext]="{context:container.command}"></ng-container>
+      <ng-container *ngIf="container.command === 'help'" [ngTemplateOutlet]="help"></ng-container>
+      <ng-container *ngIf="container.command === 'about'" [ngTemplateOutlet]="about"></ng-container>
+      <ng-container *ngIf="container.command === 'social'" [ngTemplateOutlet]="social"></ng-container>
+      <ng-container *ngIf="['help', 'about', 'social', 'clear'].indexOf(container.command) === -1"
                     [ngTemplateOutlet]="notfound"
-                    [ngTemplateOutletContext]="{context:container, answer:goApiAnswer, unRelevantAnswer:goApiUnRelevantAnswer}"></ng-container>
+                    [ngTemplateOutletContext]="{context:container.command, answer:container.answer, unRelevantAnswer:container.unRelevantAnswer}"></ng-container>
     </ng-container>
   </div>
   <ng-container *ngTemplateOutlet="commandLine"></ng-container>
@@ -39,7 +39,7 @@
 </ng-template>
 
 <ng-template #notfound let-context="context" let-answer="answer" let-unRelevantAnswer="unRelevantAnswer">
-  <ng-container *ngIf="goApiAnswer !== '' || goApiUnRelevantAnswer !== ''">
+  <ng-container *ngIf="answer !== '' || unRelevantAnswer !== ''">
     <div class="template other" *ngIf="answer != ''">
       {{answer}}
     </div>
@@ -48,7 +48,7 @@
       {{unRelevantAnswer}}
     </div>
   </ng-container>
-  <ng-container *ngIf="goApiAnswer === '' && goApiUnRelevantAnswer === ''">
+  <ng-container *ngIf="answer === '' && unRelevantAnswer === ''">
     <div class="template other">
       Undefined command : ({{context}})<br>
       For list of usages type "help"
@@ -56,15 +56,11 @@
   </ng-container>
 </ng-template>
 
-<ng-template #notfound>
-
-</ng-template>
-
 <ng-template #commandLine>
   <div class="prompt">
     <span class="user">{{username}}</span><span class="location">~</span><span class="dollar">$</span>
     <div class="command">
-      <input type="text" class="line" (keydown.enter)="process($event)">
+      <input type="text" class="line" id="cLine" (keydown.enter)="process($event)" autofocus>
     </div>
   </div>
 </ng-template>
