@@ -5,6 +5,7 @@ import {
   TemplateRef,
   ViewChild, ViewContainerRef
 } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,10 +19,13 @@ export class DashboardComponent implements OnInit {
   @ViewChild('readOnlyCommandLine') readOnlyCommandLine!: TemplateRef<any>;
 
   containers: any = [];
+  goApiAnswer = '';
+  goApiUnRelevantAnswer = '';
 
   constructor(
     private renderer: Renderer2,
     private viewContainerRef: ViewContainerRef,
+    private http: HttpClient
   ) {
   }
 
@@ -29,8 +33,27 @@ export class DashboardComponent implements OnInit {
     if (event.target.value === 'clear') {
       this.containers = [];
     }
-    this.containers.push(event.target.value);
-    event.target.value = '';
+    this.goApiAnswer = '';
+    this.goApiUnRelevantAnswer = '';
+    const targetValue = event.target.value;
+    if (['help', 'about', 'social', 'clear'].indexOf(targetValue) === -1) {
+      this.http.post<any>('https://yusufdgn.com:/api/question', {question: targetValue}).pipe().subscribe(res => {
+        this.goApiAnswer = res.Answer;
+        this.goApiUnRelevantAnswer = res.UnrelevantAnswer;
+        this.containers.push(targetValue);
+        event.target.value = '';
+      }, error => {
+        this.goApiAnswer = '';
+        this.goApiUnRelevantAnswer = '';
+        this.containers.push(targetValue);
+        // this.containers.push(targetValue);
+        event.target.value = '';
+      });
+    } else {
+      this.containers.push(targetValue);
+      event.target.value = '';
+    }
+
     // const command = JSON.parse(JSON.stringify(event.target.value));
     // const self = this;
     // const commandLineView = this.viewContainerRef.createEmbeddedView(this.readOnlyCommandLine, {context: 'heeeeelp'});

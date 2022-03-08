@@ -7,8 +7,9 @@
       <ng-container *ngIf="container === 'help'" [ngTemplateOutlet]="help"></ng-container>
       <ng-container *ngIf="container === 'about'" [ngTemplateOutlet]="about"></ng-container>
       <ng-container *ngIf="container === 'social'" [ngTemplateOutlet]="social"></ng-container>
-      <ng-container *ngIf="['help', 'about', 'social', 'clear'].indexOf(container) === -1" [ngTemplateOutlet]="notfound"
-                    [ngTemplateOutletContext]="{context:container}"></ng-container>
+      <ng-container *ngIf="['help', 'about', 'social', 'clear'].indexOf(container) === -1"
+                    [ngTemplateOutlet]="notfound"
+                    [ngTemplateOutletContext]="{context:container, answer:goApiAnswer, unRelevantAnswer:goApiUnRelevantAnswer}"></ng-container>
     </ng-container>
   </div>
   <ng-container *ngTemplateOutlet="commandLine"></ng-container>
@@ -33,22 +34,37 @@
   <div class="template social">
     <a href="https://tr.linkedin.com/in/yusufdgn" class="social-link" target="_blank">LinkedIn</a>
     <a href="https://instagram.com/yusufdgn" class="social-link" target="_blank">Instagram</a>
-    <a href="https://twitter.com/01011001D" class="social-link" target="_blank">Social</a>
+    <a href="https://twitter.com/01011001D" class="social-link" target="_blank">Twitter</a>
   </div>
 </ng-template>
 
-<ng-template #notfound let-context="context">
-  <div class="template other">
-    Undefined command : ({{context}})<br>
-    For list of usages type "help"
-  </div>
+<ng-template #notfound let-context="context" let-answer="answer" let-unRelevantAnswer="unRelevantAnswer">
+  <ng-container *ngIf="goApiAnswer !== '' || goApiUnRelevantAnswer !== ''">
+    <div class="template other" *ngIf="answer != ''">
+      {{answer}}
+    </div>
+    <div class="template other" *ngIf="unRelevantAnswer != ''">
+      Hmmm, alakasız bir cevaba ne dersin? <br>
+      {{unRelevantAnswer}}
+    </div>
+  </ng-container>
+  <ng-container *ngIf="goApiAnswer === '' && goApiUnRelevantAnswer === ''">
+    <div class="template other">
+      Undefined command : ({{context}})<br>
+      For list of usages type "help"
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #notfound>
+
 </ng-template>
 
 <ng-template #commandLine>
   <div class="prompt">
     <span class="user">{{username}}</span><span class="location">~</span><span class="dollar">$</span>
     <div class="command">
-      <input type="text" class="line" (keyup.enter)="process($event)">
+      <input type="text" class="line" (keydown.enter)="process($event)">
     </div>
   </div>
 </ng-template>
