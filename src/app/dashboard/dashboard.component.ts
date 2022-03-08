@@ -1,5 +1,5 @@
 import {
-  Component,
+  Component, ElementRef,
   OnInit,
   Renderer2,
   TemplateRef,
@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   command = '';
   content = 'Komutları görebilmek için "help" yazın.!';
   @ViewChild('readOnlyCommandLine') readOnlyCommandLine!: TemplateRef<any>;
+  @ViewChild('cLine', {static: false}) cLine!: ElementRef<any>;
 
   containers: any = [];
   goApiAnswer = '';
@@ -39,7 +40,7 @@ export class DashboardComponent implements OnInit {
         this.containers.push({command: targetValue, context: targetValue, answer: res.Answer, unRelevantAnswer: res.UnrelevantAnswer});
         event.target.value = '';
       }, error => {
-        this.containers.push({command: targetValue, context: targetValue, answer: JSON.parse(JSON.stringify(Math.random())), unRelevantAnswer: ''});
+        this.containers.push({command: targetValue, context: targetValue, answer: '', unRelevantAnswer: ''});
         // this.containers.push(targetValue);
         event.target.value = '';
       });
@@ -75,12 +76,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  clickTrigger() {
-    const element = document.getElementById('cLine');
-    if (element !== null) {
-      element.click();
-      element.focus();
-    }
+  onBlur() {
+    // @ts-ignore
+    this.cLine.nativeElement.focus();
   }
 
 

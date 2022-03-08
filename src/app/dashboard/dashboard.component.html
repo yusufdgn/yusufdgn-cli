@@ -1,4 +1,4 @@
-<div class="terminal" (click)="clickTrigger()">
+<div class="terminal">
   <div class="text">
     {{content}}
     <ng-container *ngFor="let container of containers">
@@ -60,7 +60,7 @@
   <div class="prompt">
     <span class="user">{{username}}</span><span class="location">~</span><span class="dollar">$</span>
     <div class="command">
-      <input type="text" class="line" id="cLine" (keydown.enter)="process($event)" autofocus>
+      <input type="text" class="line" id="cLine" #cLine (keydown.enter)="process($event)" (blur)="onBlur()" autofocus>
     </div>
   </div>
 </ng-template>
