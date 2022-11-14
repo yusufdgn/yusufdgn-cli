@@ -15,7 +15,7 @@ import {HttpClient} from '@angular/common/http';
 export class DashboardComponent implements OnInit {
   username = 'yusuf@dogan';
   command = '';
-  content = 'Yusuf Doğan';
+  content = 'For list of usages type "help"';
   @ViewChild('readOnlyCommandLine') readOnlyCommandLine!: TemplateRef<any>;
   @ViewChild('cLine', {static: false}) cLine!: ElementRef<any>;
 
