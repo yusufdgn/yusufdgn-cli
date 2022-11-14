@@ -9,7 +9,7 @@
       <ng-container *ngIf="container.command === 'social'" [ngTemplateOutlet]="social"></ng-container>
       <ng-container *ngIf="['help', 'about', 'social', 'clear'].indexOf(container.command) === -1"
                     [ngTemplateOutlet]="notfound"
-                    [ngTemplateOutletContext]="{context:container.command, answer:container.answer, unRelevantAnswer:container.unRelevantAnswer}"></ng-container>
+                    [ngTemplateOutletContext]="{context:container.command}"></ng-container>
     </ng-container>
   </div>
   <ng-container *ngTemplateOutlet="commandLine"></ng-container>
@@ -38,22 +38,11 @@
   </div>
 </ng-template>
 
-<ng-template #notfound let-context="context" let-answer="answer" let-unRelevantAnswer="unRelevantAnswer">
-  <ng-container *ngIf="answer !== '' || unRelevantAnswer !== ''">
-    <div class="template other" *ngIf="answer != ''">
-      {{answer}}
-    </div>
-    <div class="template other" *ngIf="unRelevantAnswer != ''">
-      Hmmm, alakasız bir cevaba ne dersin? <br>
-      {{unRelevantAnswer}}
-    </div>
-  </ng-container>
-  <ng-container *ngIf="answer === '' && unRelevantAnswer === ''">
-    <div class="template other">
-      Undefined command : ({{context}})<br>
-      For list of usages type "help"
-    </div>
-  </ng-container>
+<ng-template #notfound let-context="context">
+  <div class="template other">
+    Undefined command : ({{context}})<br>
+    For list of usages type "help"
+  </div>
 </ng-template>
 
 <ng-template #commandLine>

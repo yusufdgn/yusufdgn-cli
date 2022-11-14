@@ -15,13 +15,11 @@ import {HttpClient} from '@angular/common/http';
 export class DashboardComponent implements OnInit {
   username = 'yusuf@dogan';
   command = '';
-  content = 'Komutları görebilmek için "help" yazın.!';
+  content = 'Yusuf Doğan';
   @ViewChild('readOnlyCommandLine') readOnlyCommandLine!: TemplateRef<any>;
   @ViewChild('cLine', {static: false}) cLine!: ElementRef<any>;
 
   containers: any = [];
-  goApiAnswer = '';
-  goApiUnRelevantAnswer = '';
 
   constructor(
     private renderer: Renderer2,
@@ -36,42 +34,14 @@ export class DashboardComponent implements OnInit {
     }
     const targetValue = event.target.value;
     if (['help', 'about', 'social', 'clear'].indexOf(targetValue) === -1) {
-      this.http.post<any>('https://yusufdgn.com:/api/question', {question: targetValue}).pipe().subscribe(res => {
-        this.containers.push({command: targetValue, context: targetValue, answer: res.Answer, unRelevantAnswer: res.UnrelevantAnswer});
-        event.target.value = '';
-      }, error => {
-        this.containers.push({command: targetValue, context: targetValue, answer: '', unRelevantAnswer: ''});
-        // this.containers.push(targetValue);
-        event.target.value = '';
-      });
+      this.containers.push({command: targetValue, context: targetValue, answer: '', unRelevantAnswer: ''});
+      event.target.value = '';
     } else {
       this.containers.push({command: targetValue, context: targetValue, answer: '', unRelevantAnswer: ''});
       event.target.value = '';
     }
-
-    // const command = JSON.parse(JSON.stringify(event.target.value));
-    // const self = this;
-    // const commandLineView = this.viewContainerRef.createEmbeddedView(this.readOnlyCommandLine, {context: 'heeeeelp'});
-    // const template = this.getTemplate();
-    // const commandView = this.viewContainerRef.createEmbeddedView(template, {context: 'heeeeelp'});
-    // setTimeout(() => {
-    //   console.log(commandLineView);
-    //   // self.content += commandLineView?.rootNodes[0].outerHTML;
-    //   // self.content += commandView?.rootNodes[0].outerHTML;
-    //   // this.renderer.setProperty(this.mainRef?.nativeElement, 'outerHtml', self.content);
-    //   event.target.value = '';
-    // }, 10);
   }
 
-  // getTemplate(): TemplateRef<any> {
-  //   if (this.command === 'about') {
-  //     return this.aboutRef;
-  //   } else if (this.command === 'social') {
-  //     return this.socialRef;
-  //   } else {
-  //     return this.helpRef;
-  //   }
-  // }
 
   ngOnInit(): void {
   }
